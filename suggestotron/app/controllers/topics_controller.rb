@@ -4,6 +4,10 @@ class TopicsController < ApplicationController
   # GET /topics
   # GET /topics.json
   def index
+    url = "http://api.giphy.com/v1/gifs/search?q=funny+cat&api_key=dc6zaTOxFJmzC&limit=20&offset=0"
+    uri = URI.parse(url) #parse and change URL to URI because URL is just a string.
+    json = JSON.parse(Net::HTTP.get(uri)) #json parse for Ruby
+    @giphy = json["data"].sample["images"]["fixed_height"]["url"]
     @topics = Topic.all
   end
 
